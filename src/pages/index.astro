@@ -1,34 +1,8 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import LinkCard from "../components/LinkCard.astro";
+import { homeLinks } from "../data/home";
 
-const links = [
-  {
-    href: "/projects",
-    title: "Projects",
-    description: "Repositories, builds and experiments.",
-  },
-  {
-    href: "/blog",
-    title: "Blog",
-    description: "Notes on security, infrastructure and whatever else I am learning.",
-  },
-  {
-    href: "/papers",
-    title: "Papers",
-    description: "Longer-form technical and research work.",
-  },
-  {
-    href: "/resources",
-    title: "Resources",
-    description: "Links, tools and references I want to keep around.",
-  },
-  {
-    href: "/resume",
-    title: "Resume",
-    description: "Current work history and experience.",
-  },
-];
 ---
 
 <BaseLayout>
@@ -50,7 +24,7 @@ const links = [
     </div>
 
     <div class="link-grid">
-      {links.map((link) => <LinkCard {...link} />)}
+      {homeLinks.map((link) => <LinkCard {...link} />)}
     </div>
   </section>
 </BaseLayout>
