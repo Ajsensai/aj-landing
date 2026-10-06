@@ -7,93 +7,62 @@ const routes = [
     href: "/resume",
     number: "01",
     title: "Resume",
-    description: "Work history, technical experience and the things I spend most of my working week thinking about.",
+    description: "Work history and experience.",
     status: "Career",
   },
   {
     href: "/projects",
     number: "02",
     title: "Projects",
-    description: "A home for experiments, small tools, infrastructure builds and things that became more involved than expected.",
+    description: "Things I have built, tested or spent too much time on.",
     status: "Builds",
   },
   {
     href: "/blog",
     number: "03",
     title: "Blog",
-    description: "Notes on security, automation, infrastructure and whatever I am learning or pulling apart at the time.",
+    description: "Notes on security, infrastructure, automation and whatever else I am learning.",
     status: "Writing",
   },
   {
     href: "/papers",
     number: "04",
     title: "Papers",
-    description: "Longer-form technical work, research and material worth keeping somewhere more permanent than a note.",
+    description: "Longer-form technical and research work.",
     status: "Research",
   },
   {
     href: "/resources",
     number: "05",
     title: "Resources",
-    description: "Tools, references, links, snippets and other useful things I want to be able to find again.",
+    description: "Useful links, tools, references and things I want to find again.",
     status: "Library",
   },
 ];
 ---
 
 <BaseLayout>
-  <section class="hero">
-    <div class="hero__meta">
-      <span class="status-dot"></span>
-      <span>Cyber security · engineering · automation</span>
-    </div>
-
-    <div class="hero__content">
-      <p class="eyebrow">Anthony Bale / Sydney</p>
-      <h1>
-        I build, break and
-        <span class="hero-accent">improve things.</span>
-      </h1>
-      <p class="hero__lede">
-        Cyber security professional with an interest in product security,
-        infrastructure, automation and practical engineering. This is the
-        index for work I want to keep, explain or come back to later.
-      </p>
-    </div>
-
-    <div class="hero__aside">
-      <span class="hero__label">Currently</span>
-      <p>
-        Working in technical security verification and finding places where
-        automation can remove repetitive security work.
-      </p>
-    </div>
+  <section class="intro">
+    <p class="eyebrow">Anthony Bale · Sydney</p>
+    <h1>Hi, I’m Anthony.</h1>
+    <p class="intro__copy">
+      I work in cyber security and like building useful things, pulling apart
+      how systems work, and automating the boring bits.
+    </p>
+    <p class="intro__copy">
+      This site is mostly somewhere to keep projects, notes and other things
+      I find interesting.
+    </p>
   </section>
 
   <section class="index-section" aria-labelledby="explore-title">
-    <div class="section-intro">
-      <p class="eyebrow">Index</p>
+    <div class="section-heading">
       <h2 id="explore-title">Explore</h2>
-      <p>
-        Not everything here is finished. That is deliberate — this site is
-        meant to grow as projects, notes and useful artefacts accumulate.
-      </p>
+      <p>Some of these are empty for now. I’ll fill them out over time.</p>
     </div>
 
-    <div class="route-grid">
+    <div class="route-list">
       {routes.map((route) => <RouteCard {...route} />)}
     </div>
-  </section>
-
-  <section class="notes-strip">
-    <div>
-      <p class="eyebrow">A small corner of the internet</p>
-      <h2>Useful over polished.</h2>
-    </div>
-    <p>
-      The aim is less “portfolio showcase” and more personal technical index:
-      concise write-ups, working examples, lessons learned and the occasional
-      rabbit hole.
-    </p>
   </section>
 </BaseLayout>
