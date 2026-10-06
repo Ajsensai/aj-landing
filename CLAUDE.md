@@ -2,9 +2,9 @@
 
 ## Purpose
 
-This repository powers `ajtech.au`, Anthony Bale's personal technical landing page.
+This repository powers `ajtech.au`, AJ's personal technical landing page.
 
-It is intentionally a hub rather than a conventional portfolio. The root page should quickly explain who Anthony is and provide clear routes into résumé, projects, writing, papers and resources.
+It is intentionally a hub rather than a conventional portfolio. The root page should quickly explain who AJ is and provide clear routes into résumé, projects, writing, papers and resources.
 
 ## Stack
 
