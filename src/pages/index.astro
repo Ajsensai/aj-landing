@@ -1,0 +1,99 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import RouteCard from "../components/RouteCard.astro";
+
+const routes = [
+  {
+    href: "/resume",
+    number: "01",
+    title: "Resume",
+    description: "Work history, technical experience and the things I spend most of my working week thinking about.",
+    status: "Career",
+  },
+  {
+    href: "/projects",
+    number: "02",
+    title: "Projects",
+    description: "A home for experiments, small tools, infrastructure builds and things that became more involved than expected.",
+    status: "Builds",
+  },
+  {
+    href: "/blog",
+    number: "03",
+    title: "Blog",
+    description: "Notes on security, automation, infrastructure and whatever I am learning or pulling apart at the time.",
+    status: "Writing",
+  },
+  {
+    href: "/papers",
+    number: "04",
+    title: "Papers",
+    description: "Longer-form technical work, research and material worth keeping somewhere more permanent than a note.",
+    status: "Research",
+  },
+  {
+    href: "/resources",
+    number: "05",
+    title: "Resources",
+    description: "Tools, references, links, snippets and other useful things I want to be able to find again.",
+    status: "Library",
+  },
+];
+---
+
+<BaseLayout>
+  <section class="hero">
+    <div class="hero__meta">
+      <span class="status-dot"></span>
+      <span>Cyber security · engineering · automation</span>
+    </div>
+
+    <div class="hero__content">
+      <p class="eyebrow">Anthony Bale / Sydney</p>
+      <h1>
+        I build, break and
+        <span class="hero-accent">improve things.</span>
+      </h1>
+      <p class="hero__lede">
+        Cyber security professional with an interest in product security,
+        infrastructure, automation and practical engineering. This is the
+        index for work I want to keep, explain or come back to later.
+      </p>
+    </div>
+
+    <div class="hero__aside">
+      <span class="hero__label">Currently</span>
+      <p>
+        Working in technical security verification and finding places where
+        automation can remove repetitive security work.
+      </p>
+    </div>
+  </section>
+
+  <section class="index-section" aria-labelledby="explore-title">
+    <div class="section-intro">
+      <p class="eyebrow">Index</p>
+      <h2 id="explore-title">Explore</h2>
+      <p>
+        Not everything here is finished. That is deliberate — this site is
+        meant to grow as projects, notes and useful artefacts accumulate.
+      </p>
+    </div>
+
+    <div class="route-grid">
+      {routes.map((route) => <RouteCard {...route} />)}
+    </div>
+  </section>
+
+  <section class="notes-strip">
+    <div>
+      <p class="eyebrow">A small corner of the internet</p>
+      <h2>Useful over polished.</h2>
+    </div>
+    <p>
+      The aim is less “portfolio showcase” and more personal technical index:
+      concise write-ups, working examples, lessons learned and the occasional
+      rabbit hole.
+    </p>
+  </section>
+</BaseLayout>
