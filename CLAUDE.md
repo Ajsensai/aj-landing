@@ -65,6 +65,10 @@ npm run build
 
 Before merging changes, ensure `npm run build` succeeds and verify the main page plus all route placeholders at desktop and mobile widths.
 
+## Naming
+
+Use `AJ` throughout the general site. Reserve `Anthony Bale` for résumé content and LinkedIn-specific references only.
+
 ## Content philosophy
 
 Prefer concise, specific copy. Projects and writing should explain what was built, why it mattered, what was learned and where useful artefacts live.
