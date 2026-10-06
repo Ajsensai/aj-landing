@@ -1,11 +1,31 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import PlaceholderPage from "../components/PlaceholderPage.astro";
+import LinkCard from "../components/LinkCard.astro";
+import PageHeading from "../components/PageHeading.astro";
+
+const projects = [
+  {
+    title: "aj-landing",
+    description: "This site — Astro, GitHub Pages and a deliberately small component system.",
+    href: "https://github.com/Ajsensai/aj-landing",
+    external: true,
+  },
+  {
+    title: "aj-resume",
+    description: "Static HTML/CSS résumé with print-friendly A4 output and lightweight templating.",
+    href: "https://github.com/Ajsensai/aj-resume",
+    external: true,
+  },
+];
 ---
+
 <BaseLayout title="Projects — AJ Tech">
-  <PlaceholderPage
-    eyebrow="02 / Projects"
+  <PageHeading
     title="Projects"
-    description="This will become a collection of project write-ups: home-lab infrastructure, automation, security tooling and other experiments worth documenting."
+    description="A small collection of things I have built, tested or kept around."
   />
+
+  <div class="link-grid">
+    {projects.map((project) => <LinkCard {...project} />)}
+  </div>
 </BaseLayout>
