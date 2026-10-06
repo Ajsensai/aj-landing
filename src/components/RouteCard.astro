@@ -1,0 +1,23 @@
+---
+interface Props {
+  href: string;
+  number: string;
+  title: string;
+  description: string;
+  status?: string;
+}
+
+const { href, number, title, description, status = "Explore" } = Astro.props;
+---
+
+<a class="route-card" href={href}>
+  <div class="route-card__top">
+    <span class="route-number">{number}</span>
+    <span class="route-status">{status}</span>
+  </div>
+  <div>
+    <h3>{title}</h3>
+    <p>{description}</p>
+  </div>
+  <span class="route-arrow" aria-hidden="true">↗</span>
+</a>
