@@ -1,6 +1,8 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import PageHeading from "../components/PageHeading.astro";
+import PaperCard from "../components/PaperCard.astro";
+import { papers } from "../data/papers";
 ---
 
 <BaseLayout title="Papers — AJ Tech">
@@ -9,7 +11,13 @@ import PageHeading from "../components/PageHeading.astro";
     description="Technical papers and longer-form work. LaTeX sources will be compiled to PDF and listed here as they are added."
   />
 
-  <div class="empty-state">
-    <p>No papers published here yet.</p>
-  </div>
+  {papers.length > 0 ? (
+    <div class="paper-list">
+      {papers.map((paper) => <PaperCard {...paper} />)}
+    </div>
+  ) : (
+    <div class="empty-state">
+      <p>No papers published here yet.</p>
+    </div>
+  )}
 </BaseLayout>
