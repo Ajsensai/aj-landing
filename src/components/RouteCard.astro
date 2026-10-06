@@ -13,13 +13,13 @@ const resolvedHref = `${base}${href}`;
 ---
 
 <a class="route-card" href={resolvedHref}>
-  <div class="route-card__top">
-    <span class="route-number">{number}</span>
-    <span class="route-status">{status}</span>
-  </div>
-  <div>
-    <h3>{title}</h3>
+  <span class="route-number">{number}</span>
+  <div class="route-card__content">
+    <div class="route-card__title">
+      <h3>{title}</h3>
+      <span class="route-status">{status}</span>
+    </div>
     <p>{description}</p>
   </div>
-  <span class="route-arrow" aria-hidden="true">↗</span>
+  <span class="route-arrow" aria-hidden="true">→</span>
 </a>
