@@ -21,6 +21,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Compile DS-SIM paper
+        uses: xu-cheng/latex-action@v4
+        with:
+          root_file: main.tex
+          working_directory: papers/ds-sim-report
+
+      - name: Publish compiled paper
+        run: |
+          mkdir -p public/papers
+          cp papers/ds-sim-report/main.pdf public/papers/ds-sim-report.pdf
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
