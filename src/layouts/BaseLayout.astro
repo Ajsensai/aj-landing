@@ -1,0 +1,53 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "AJ Tech — Anthony Bale",
+  description = "Cyber security, automation, infrastructure and assorted technical projects by Anthony Bale.",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#101513" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <div class="site-shell">
+      <header class="site-header">
+        <a class="brand" href="/" aria-label="AJ Tech home">
+          <span class="brand-mark">AJ</span>
+          <span class="brand-word">tech</span>
+        </a>
+        <nav class="top-nav" aria-label="Primary navigation">
+          <a href="/projects">Projects</a>
+          <a href="/blog">Blog</a>
+          <a href="/resume">Resume</a>
+        </nav>
+      </header>
+
+      <main>
+        <slot />
+      </main>
+
+      <footer class="site-footer">
+        <span>Anthony Bale · Sydney, Australia</span>
+        <div class="footer-links">
+          <a href="https://github.com/Ajsensai">GitHub</a>
+          <a href="https://www.linkedin.com/in/anthony-bale-sec">LinkedIn</a>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>
