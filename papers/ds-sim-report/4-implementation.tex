@@ -1,0 +1,237 @@
+% 4. Implementation (2 pages): brief description of any implementation specific information including technologies, techniques, software libraries and data structures used. How each of components/functions of your simulator is implemented
+
+
+\subsection{workshops}The project was implemented in a few stages determined by the tutorial workshops
+
+
+\subsection{deliverables} For the assignment, implementation was based on a few key steps broken down into deliverables which were outlined in the README section of a repository. The code was maintained and stored in Github with some simple commit history and a few pull requests. The layout of the overall project can be seen below:
+
+\begin{lstlisting}
+/** "How's it tracking mate?"
+
+    [x] Basic implementation (during tutorials)
+    [x] set standard for docstring & linting of project
+    [x]: Understand what FC implementation looks like
+    [x]: Diagram & Pseudo FC
+    [x]: Implement FC
+    [x]: Linting & formatting
+    [x]: Project documentation (LaTEX Template)
+ */
+\end{lstlisting}
+
+\subsection{Specific components of GreetClient}
+\subsubsection{Establish an initial connection the DS-SIM}
+The initial connection DS-SIM is handled by the function setupConnection which is detailed below:
+
+\begin{lstlisting}
+/**
+    Sets up connection and authentication with the server.
+
+    Client sends HELO, receives OK
+    Client sends AUTH, receives OK
+     
+    @param out PrintWriter for sending messages to the server
+    @param in  BufferedReader for receiving messages from the server
+    @throws IOException if an I/O error occurs while communicating with the server
+*/
+
+    private static void setupConnection(PrintWriter out, BufferedReader in) throws IOException {
+  
+        String msg = "HELO";
+        String response;
+        String auth = "SYSTEM";
+
+        // HELO
+        out.println(msg);
+        if (!"OK".equals(in.readLine())){
+            throw new IOException("HELO failed, Are you using correct DS-SIM?");
+        }
+
+        // AUTH
+        msg = "AUTH " + auth;
+        out.println(msg);
+        if (!"OK".equals(in.readLine())){
+            throw new IOException("AUTH failed, Are you using correct DS-SIM?");
+        }
+    }
+\end{lstlisting}
+This function meeds the initial requirement of GreetClient by establishing a connection to DS-SIM. It uses PrintWriter to handle writing output to a stream, BufferedReader to read text from an input stream and throws an input / output exception incase of any interruptions to this stream. From here, it follows the standard DS-SIM handshake method as follows:
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}[node distance=2cm,>=Latex]
+        % Nodes
+        \node (c1) [draw, text width=2cm, align=center] {CLIENT};
+        \node (s1) [draw, right=of c1,yshift=-0.5cm, text width=2cm, align=center] {SERVER};
+        \node (c2) [draw, below=1cm of c1, text width=2cm, align=center] {CLIENT};
+        \node (s2) [draw, right=of c2,yshift=-0.5cm, text width=2cm, align=center] {SERVER};
+        \node (c3) [draw, below=1cm of c2, text width=2cm, align=center] {CLIENT};
+
+        % Arrows
+        \draw[->, draw=blue] (c1) -- node[midway, above] {HELO} (s1);
+        \draw[<-, draw=red] (c2) -- node[midway, below] {OK} (s1);
+        \draw[->, draw=blue] (c2) -- node[midway, below] {AUTH 1234} (s2);
+        \draw[<-, draw=red] (c3) -- node[midway, below] {OK} (s2);
+
+    \end{tikzpicture}
+    \caption{Establish an initial connection the DS-SIM}
+    \label{fig:communication}
+\end{figure}
+
+\subsubsection{Ingest job and server information}
+At this stage, the client is Authenticated and is ready to begin the main loop in order to request and schedule all jobs available. This is defined in ProcessJobInfo which takes the IN/OUT param similar to above and will throw an I/O error if communication is disrupted. 
+\begin{lstlisting}
+    /**
+     * Processes job information received from the server.
+     *
+     * @param out PrintWriter for sending messages to the server
+     * @param in  BufferedReader for receiving messages from the server
+     * @throws IOException if an I/O error occurs while communicating with the server
+     */
+\end{lstlisting}
+
+An important part of this loop is the ability to handle NONE and JCPL responses from the server. A none response essentially tells Client that there are no more jobs, at which point the client responds with QUIT to kill the connection. If the server sends a JCPL, this indicates that a job has been completed and this information is added to a list. Early versions would print this list at the end of a loop for debugging however in the finalized version, this is not necessary however the JCPL info is still stored.
+
+\begin{lstlisting}
+
+     .....
+     // Handle NONE response
+    if ("NONE".equals(response)) {
+        out.println("QUIT");
+    ....
+    // Handle JCPL response
+    if (response.contains("JCPL")) {
+        jcplList.add(response);
+        continue;
+\end{lstlisting}
+
+Another important feature within this function is the ability to split and sort information received from the server. This is done by opening a String array and setting response.split after which each section of the array is declared based on it's functionality. For example, JobID is the expected return at index 1 of the list, therefore it's declared here for re-use later in a readable format.
+
+\begin{lstlisting}
+    // Split the received line by whitespace
+    String[] jobParts = response.split("\\s+");
+    ...
+    // Assign each part to corresponding variables
+    String jobType = jobParts[0];
+    int jobID = Integer.parseInt(jobParts[1]);
+    int core = Integer.parseInt(jobParts[3]);
+    int memory = Integer.parseInt(jobParts[4]);
+    int disk = Integer.parseInt(jobParts[5]);
+\end{lstlisting}
+
+After the information is split and parsed, Client sends a get request to the server. This is achieved by selecting the required information (Core, Memory and Disk) then sending a crafted response to the server
+
+\begin{lstlisting}
+
+    // 3. Send GETS to the server
+    // e.g. GETS Capable <core> <memory> <disk>
+    String getsRequest = "GETS " + "Capable" + " " + core + " " + memory + " " + disk;
+    out.println(getsRequest);
+\end{lstlisting}
+
+The flow of this process can be seen below in Fig3:
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}[node distance=2cm,>=Latex]
+        % Nodes
+        \node (c1) [draw, text width=2cm, align=center] {CLIENT};
+        \node (s1) [draw, right=of c1,yshift=-0.5cm, text width=2cm, align=center] {SERVER};
+        \node (c2) [draw, below=1cm of c1, text width=2cm, align=center] {CLIENT};
+        \node (s2) [draw, right=of c2,yshift=-0.5cm, text width=2cm, align=center] {SERVER};
+        \node (c3) [draw, below=1cm of c2, text width=2cm, align=center] {CLIENT};
+
+        % Arrows
+        \draw[->, draw=blue] (c1) -- node[midway, above] {REDY} (s1);
+        \draw[<-, draw=red] (c2) -- node[midway, below] {JOBN} (s1);
+        \draw[->, draw=blue] (c2) -- node[midway, below] {GETS} (s2);
+        \draw[<-, draw=red] (c3) -- node[midway, below] {DATA} (s2);
+
+    \end{tikzpicture}
+    \caption{Ingest job and server information}
+    \label{fig:communication}
+\end{figure}
+
+\subsubsection{Distribute the jobs across DS-SIM}
+This phase of the program determines which server receives which job and consists of a response parse split followed by a selectBestServer function. The main highlight here is the split of server information based on selectBestServer whereby each component of the response is ingested and analysed. At this point, the implementation is carefully considered as to how to respond to the server with the correct selection in a SCHD command. This is essentially the core functionality of the Client app and the implementation shown below is for First Capable. 
+
+\begin{lstlisting}
+    /**
+     * Selects the best server based on the given criteria.
+     *
+     * @param servers List of server information arrays where each array contains server details
+     * @param jobCore Number of cores required by the job
+     * @param jobMemory Amount of memory required by the job
+     * @param jobDisk Amount of disk space required by the job
+     * @return An array containing the details of the selected server or null if no suitable server is found
+     */
+\end{lstlisting}
+
+At this stage, the list of servers is sent to the client and the client is required to handle the response including white spaces and line splits. This is achieved through a List String array which populates all of the information received from the server. numLines counts the lines given and then for each line in numLines, the servers are sorted into a list of arrays.
+\begin{lstlisting}
+    // 6. Receive and organize server data
+    List<String[]> servers = new ArrayList<>();
+    for (int i = 0; i < numLines; i++) {
+        String line = in.readLine().trim();
+        servers.add(line.split("\\s+"));
+    }
+\end{lstlisting}
+
+The selectBestServer function provides the functionality to choose a server with the information provided in the servers array list. For each item, at this point the client is able to select different parameters of the server such as core, cpu, ram, state, waiting jobs or ready jobs to determine which server should be selected in order to run this particular job. There have been several implementation attempts at this function however the implementation below servers to demonstrate First Capable, whereby the first server from the list is chosen. 
+\begin{lstlisting}
+    /**
+     * Selects the best server based on the given criteria.
+     *
+     * @param servers List of server information arrays where each array contains server details
+     * @param jobCore Number of cores required by the job
+     * @param jobMemory Amount of memory required by the job
+     * @param jobDisk Amount of disk space required by the job
+     * @return An array containing the details of the selected server or null if no suitable server is found
+     */
+    private static String[] selectBestServer(List<String[]> servers, int jobCore, int jobMemory, int jobDisk) {
+    String[] bestServer = null;
+    if (!servers.isEmpty()) {
+        bestServer = servers.get(0); // First Capable logic
+    }
+    return bestServer;
+    }
+\end{lstlisting}
+
+selectBestServer is called based on bestServer which is then used in the following section to schedule the job. As long as a server was selected, the SCHD message is created and sent to the server which is the final stage of the overarching loop. At this point, the SCHD message is sent to DS-SIM, the job is scheduled and the loop returns to wait for a further response from DS-IM.
+\begin{lstlisting}
+
+    // 7. Select the bset server based on criteria
+    String[] bestServer = selectBestServer(servers, core, memory, disk);
+
+    //8. Schedule job to the best server
+    if (bestServer != null){
+        String serverType = bestServer[0];
+        String serverID = bestServer[1];
+        String schdMsg = "SCHD" + " " + jobID + " " + serverType + " " + serverID;
+        out.println(schdMsg);
+        in.readLine(); // Read the response
+    }
+\end{lstlisting}
+
+The above server selection and scheduling parts can be summarised in the below fig4 which outlines the client and server communication for this final stage. After this point, the Client loops back into REDY to receive a further job from DS-SIM and will function as intended until NONE is received or an invalid response is detected.
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}[node distance=2cm,>=Latex]
+        % Nodes
+        \node (c1) [draw, text width=2cm, align=center] {CLIENT};
+        \node (s1) [draw, right=of c1,yshift=-0.5cm, text width=2cm, align=center] {SERVER};
+        \node (c2) [draw, below=1cm of c1, text width=2cm, align=center] {CLIENT};
+        \node (s2) [draw, right=of c2,yshift=-0.5cm, text width=2cm, align=center] {SERVER};
+        \node (c3) [draw, below=1cm of c2, text width=2cm, align=center] {CLIENT};
+
+        % Arrows
+        \draw[->, draw=blue] (c1) -- node[midway, above] {OK} (s1);
+        \draw[<-, draw=red] (c2) -- node[midway, below] {Servers} (s1);
+        \draw[->, draw=blue] (c2) -- node[midway, below] {SCHD} (s2);
+        \draw[<-, draw=red] (c3) -- node[midway, below] {OK} (s2);
+
+    \end{tikzpicture}
+    \caption{Distribute the jobs across DS-SIM}
+    \label{fig:communication}
+\end{figure}

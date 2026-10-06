@@ -1,0 +1,48 @@
+% 2. System overview (1/2 page): high-level description of the system (both client-side simulator and server side simulator with the focus being your client-side simulator), preferably, with a figure (your own, not one in the ds-sim user guide) showing the workflow/working of the system
+
+\subsubsection{DS-SIM}
+DS-SIM is a versatile distributed systems simulator characterized by its open-source nature, language independence, and configurability. It serves as the backbone for modeling and simulating job scheduling and execution in distributed systems. The simulation process in DS-SIM for this application involves a few key steps. First, DS-SIM generates a job and submits it to the client. Next, the client makes a scheduling decision based on the recieved job andsystem state, then communicates this decisio back to SD-SIM. Finally, DS-SIM executes the job according to the scheduling decision.
+
+\subsubsection{GreetClient}
+GreetClient is developed specifically to interface with DS-SIM, serving as the client-side simulator component. Its functionality revolves around three main components. First establishing a connection to DS-SIM including Auth. Second, ingesting a job and requesting a list of servers. Finally, distributing the job to DS-SIM based on the algorithm used.
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}[node distance=2cm,>=Latex]
+        % Nodes
+        \node (c1) [draw, text width=2cm, align=center] {CLIENT};
+        \node (c2) [draw, below=1cm of c1, text width=2cm, align=center] {CLIENT};
+        \node (c3) [draw, below=1cm of c2, text width=2cm, align=center] {CLIENT};
+        \node (c4) [draw, below=1cm of c3, text width=2cm, align=center] {CLIENT};
+        \node (c5) [draw, below=1cm of c4, text width=2cm, align=center] {CLIENT};
+        \node (c6) [draw, below=1cm of c5, text width=2cm, align=center] {CLIENT};
+        \node (c7) [draw, below=1cm of c6, text width=2cm, align=center] {CLIENT};
+
+        \node (s1) [draw, right=of c1, yshift=-0.5cm, text width=2cm, align=center] {SERVER};
+        \node (s2) [draw, below=1cm of s1, text width=2cm, align=center] {SERVER};
+        \node (s3) [draw, below=1cm of s2, text width=2cm, align=center] {SERVER};
+        \node (s4) [draw, below=1cm of s3, text width=2cm, align=center] {SERVER};
+        \node (s5) [draw, below=1cm of s4, text width=2cm, align=center] {SERVER};
+        \node (s6) [draw, below=1cm of s5, text width=2cm, align=center] {SERVER};
+
+        % Arrows
+        \draw[->, draw=blue] (c1) -- node[midway, above] {HELO} (s1);
+        \draw[<-, draw=red] (c2) -- node[midway, below] {OK} (s1);
+        \draw[->, draw=blue] (c2) -- node[midway, below] {AUTH 1234} (s2);
+        \draw[<-, draw=red] (c3) -- node[midway, below] {OK} (s2);
+        \draw[->, draw=blue] (c3) -- node[midway, below] {REDY} (s3);
+        \draw[<-, draw=red] (c4) -- node[midway, below] {JOBN} (s3);
+        \draw[->, draw=blue] (c4) -- node[midway, below] {GETS} (s4);
+        \draw[<-, draw=red] (c5) -- node[midway, below] {DATA} (s4);
+        \draw[->, draw=blue] (c5) -- node[midway, below] {OK} (s5);
+        \draw[<-, draw=red] (c6) -- node[midway, below] {Servers} (s5);
+        \draw[->, draw=blue] (c6) -- node[midway, below] {SCHD} (s6);
+        \draw[<-, draw=red] (c7) -- node[midway, below] {OK} (s6);
+        \draw[->, draw=blue] (c7) to[out=135, in=225, looseness=1.5] node[midway, above]{loop} (c3);
+
+    \end{tikzpicture}
+    \caption{Overview of GreetClient to DS-SIM flow}
+    \label{fig:communication}
+\end{figure}
+
+\newpage

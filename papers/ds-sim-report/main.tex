@@ -1,0 +1,71 @@
+\documentclass[conference]{IEEEtran}
+
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{listings}
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{multirow}
+\usepackage{caption}
+\usepackage{array}
+\usepackage{makecell}
+\usepackage{adjustbox}
+\usepackage{multicol} % for multiple columns
+\usepackage{tikz}
+\usetikzlibrary{positioning, arrows.meta}
+\usepackage{hyperref}
+\usepackage{url}
+
+\lstset{
+  language=Java,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{blue},
+  commentstyle=\color{gray},
+  stringstyle=\color{red},
+  showstringspaces=false,
+  tabsize=4,
+  breaklines=true,
+  breakatwhitespace=true,
+}
+
+\begin{document}
+\onecolumn % Switch to one column layout
+
+\title{Client side ds-sim implementation using FC}
+
+\author{\IEEEauthorblockN{Anthony Bale and 47009470}
+\IEEEauthorblockA{\textit{School of Computing, Macquarie University}\\
+Sydney, NSW, Australia, 2109 \\
+Anthony.bale@students.mq.edu.au}
+}
+\twocolumn
+
+\maketitle
+
+
+\section{introduction}
+\input{1-introduction.tex}
+
+\section{System Overview}
+\input{2-system-overview.tex}
+
+\section{Design}
+\input{3-design.tex}
+
+\section{Implementation}
+\input{4-implementation}
+
+\section{References}
+\input{5-references.tex}
+
+\bibliography{references}{}
+\bibliographystyle{IEEEtran}
+
+\end{document}
