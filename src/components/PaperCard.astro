@@ -1,0 +1,23 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+  pdfHref?: string;
+  sourceHref?: string;
+}
+
+const { title, description, pdfHref, sourceHref } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const pdf = pdfHref ? `${base}${pdfHref}` : undefined;
+---
+
+<article class="paper-card">
+  <div>
+    <h2>{title}</h2>
+    {description && <p>{description}</p>}
+  </div>
+  <div class="paper-card__links">
+    {pdf && <a href={pdf}>View PDF</a>}
+    {sourceHref && <a href={sourceHref}>LaTeX source ↗</a>}
+  </div>
+</article>
