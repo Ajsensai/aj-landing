@@ -21,6 +21,6 @@ export const papers: PaperEntry[] = [
       "A technical report exploring IoV security concerns, fault tolerance and the use of blockchain-based approaches to improve trust and authenticity.",
     pdfHref: "/papers/iov-blockchain.pdf",
     sourceHref:
-      "https://github.com/Ajsensai/aj-landing/blob/main/papers/iov-blockchain/source.zip",
+      "https://github.com/Ajsensai/aj-landing/tree/main/papers/iov-blockchain",
   },
 ];
