@@ -2,9 +2,9 @@
 
 ## Purpose
 
-This repository powers `ajtech.au`, Anthony Bale's personal technical landing page.
+This repository powers `ajtech.au`, AJ's personal technical landing page.
 
-It is intentionally a hub rather than a conventional portfolio. The root page should quickly explain who Anthony is and provide clear routes into résumé, projects, writing, papers and resources.
+It is intentionally a hub rather than a conventional portfolio. The root page should quickly explain who AJ is and provide clear routes into résumé, projects, writing, papers and resources.
 
 ## Stack
 
@@ -64,6 +64,10 @@ npm run build
 ```
 
 Before merging changes, ensure `npm run build` succeeds and verify the main page plus all route placeholders at desktop and mobile widths.
+
+## Naming
+
+Use `AJ` throughout the general site. Reserve `Anthony Bale` for résumé content and LinkedIn-specific references only.
 
 ## Content philosophy
 
