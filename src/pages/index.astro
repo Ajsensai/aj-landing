@@ -1,68 +1,56 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import RouteCard from "../components/RouteCard.astro";
+import LinkCard from "../components/LinkCard.astro";
 
-const routes = [
-  {
-    href: "/resume",
-    number: "01",
-    title: "Resume",
-    description: "Work history and experience.",
-    status: "Career",
-  },
+const links = [
   {
     href: "/projects",
-    number: "02",
     title: "Projects",
-    description: "Things I have built, tested or spent too much time on.",
-    status: "Builds",
+    description: "Repositories, builds and experiments.",
   },
   {
     href: "/blog",
-    number: "03",
     title: "Blog",
-    description: "Notes on security, infrastructure, automation and whatever else I am learning.",
-    status: "Writing",
+    description: "Notes on security, infrastructure and whatever else I am learning.",
   },
   {
     href: "/papers",
-    number: "04",
     title: "Papers",
     description: "Longer-form technical and research work.",
-    status: "Research",
   },
   {
     href: "/resources",
-    number: "05",
     title: "Resources",
-    description: "Useful links, tools, references and things I want to find again.",
-    status: "Library",
+    description: "Links, tools and references I want to keep around.",
+  },
+  {
+    href: "/resume",
+    title: "Resume",
+    description: "Current work history and experience.",
   },
 ];
 ---
 
 <BaseLayout>
   <section class="intro">
-    <p class="eyebrow">AJ · Sydney</p>
-    <h1>Hi, I’m AJ.</h1>
+    <p class="intro__kicker">Sydney, Australia</p>
+    <h1>Projects, notes and useful things.</h1>
     <p class="intro__copy">
       I work in cyber security and like building useful things, pulling apart
       how systems work, and automating the boring bits.
     </p>
     <p class="intro__copy">
-      This site is mostly somewhere to keep projects, notes and other things
-      I find interesting.
+      This site is mostly somewhere to keep things I find interesting.
     </p>
   </section>
 
-  <section class="index-section" aria-labelledby="explore-title">
+  <section class="home-links" aria-labelledby="home-links-title">
     <div class="section-heading">
-      <h2 id="explore-title">Explore</h2>
-      <p>Some of these are empty for now. I’ll fill them out over time.</p>
+      <h2 id="home-links-title">On this site</h2>
     </div>
 
-    <div class="route-list">
-      {routes.map((route) => <RouteCard {...route} />)}
+    <div class="link-grid">
+      {links.map((link) => <LinkCard {...link} />)}
     </div>
   </section>
 </BaseLayout>
