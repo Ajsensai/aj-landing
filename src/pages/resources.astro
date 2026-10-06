@@ -1,11 +1,18 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import PlaceholderPage from "../components/PlaceholderPage.astro";
+import LinkCard from "../components/LinkCard.astro";
+import PageHeading from "../components/PageHeading.astro";
+
+import { resources } from "../data/resources";
 ---
+
 <BaseLayout title="Resources — AJ Tech">
-  <PlaceholderPage
-    eyebrow="05 / Resources"
+  <PageHeading
     title="Resources"
-    description="Reserved for tools, references, cheat sheets, links and small reusable things that are easier to maintain here than in a bookmark folder."
+    description="Useful tools, references and sites I want to be able to find again."
   />
+
+  <div class="link-grid">
+    {resources.map((resource) => <LinkCard {...resource} />)}
+  </div>
 </BaseLayout>

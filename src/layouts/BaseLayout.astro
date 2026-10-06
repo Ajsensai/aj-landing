@@ -7,11 +7,18 @@ interface Props {
 }
 
 const {
-  title = "AJ Tech — AJ",
-  description = "Cyber security, automation, infrastructure and assorted technical projects by AJ.",
+  title = "AJ Tech",
+  description = "Projects, notes, resources and assorted technical things by AJ.",
 } = Astro.props;
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const nav = [
+  ["Projects", "/projects"],
+  ["Blog", "/blog"],
+  ["Papers", "/papers"],
+  ["Resources", "/resources"],
+  ["Resume", "/resume"],
+];
 ---
 
 <!doctype html>
@@ -21,7 +28,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#f3f1ea" />
+    <meta name="theme-color" content="#111613" />
     <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
     <title>{title}</title>
   </head>
@@ -32,10 +39,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
           <span class="brand-mark">AJ</span>
           <span class="brand-word">tech</span>
         </a>
+
         <nav class="top-nav" aria-label="Primary navigation">
-          <a href={`${base}/projects`}>Projects</a>
-          <a href={`${base}/blog`}>Blog</a>
-          <a href={`${base}/resume`}>Resume</a>
+          {nav.map(([label, href]) => (
+            <a href={`${base}${href}`}>{label}</a>
+          ))}
         </nav>
       </header>
 
@@ -44,7 +52,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
       </main>
 
       <footer class="site-footer">
-        <span>AJ · Sydney, Australia</span>
+        <span>Sydney, Australia</span>
         <div class="footer-links">
           <a href="https://github.com/Ajsensai">GitHub</a>
           <a href="https://www.linkedin.com/in/anthony-bale-sec">LinkedIn</a>

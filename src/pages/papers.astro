@@ -1,11 +1,23 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import PlaceholderPage from "../components/PlaceholderPage.astro";
+import PageHeading from "../components/PageHeading.astro";
+import PaperCard from "../components/PaperCard.astro";
+import { papers } from "../data/papers";
 ---
+
 <BaseLayout title="Papers — AJ Tech">
-  <PlaceholderPage
-    eyebrow="04 / Papers"
+  <PageHeading
     title="Papers"
-    description="Reserved for longer-form research, university work, technical papers and deeper investigations that deserve a stable home."
+    description="Technical papers and longer-form work. LaTeX sources will be compiled to PDF and listed here as they are added."
   />
+
+  {papers.length > 0 ? (
+    <div class="paper-list">
+      {papers.map((paper) => <PaperCard {...paper} />)}
+    </div>
+  ) : (
+    <div class="empty-state">
+      <p>No papers published here yet.</p>
+    </div>
+  )}
 </BaseLayout>

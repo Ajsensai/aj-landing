@@ -1,0 +1,25 @@
+---
+interface Props {
+  href: string;
+  title: string;
+  description?: string;
+  external?: boolean;
+}
+
+const { href, title, description, external = false } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const resolvedHref = external ? href : `${base}${href}`;
+---
+
+<a
+  class="link-card"
+  href={resolvedHref}
+  target={external ? "_blank" : undefined}
+  rel={external ? "noreferrer" : undefined}
+>
+  <div>
+    <h3>{title}</h3>
+    {description && <p>{description}</p>}
+  </div>
+  <span aria-hidden="true">{external ? "↗" : "→"}</span>
+</a>

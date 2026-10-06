@@ -13,7 +13,7 @@ It is intentionally a hub rather than a conventional portfolio. The root page sh
 - plain CSS
 - GitHub Actions deployment to GitHub Pages
 
-Keep the site lightweight. Do not introduce a UI framework, client-side JavaScript library or component system unless a future feature clearly requires it.
+Keep the site lightweight. Use native Astro components by default. Do not introduce React, Vue, Svelte or another client framework unless a future interactive feature clearly requires it.
 
 ## Routes
 
@@ -24,7 +24,7 @@ Keep the site lightweight. Do not introduce a UI framework, client-side JavaScri
 - `/papers`
 - `/resources`
 
-The non-root routes are intentionally placeholders initially. Preserve those URLs as content is added.
+`/projects`, `/resources` and `/papers` are data-driven. `/resume` is a standalone static copy of the generated résumé from `Ajsensai/aj-resume`, kept separate so its print/PDF styling remains unchanged.
 
 ## Design direction
 
@@ -47,6 +47,21 @@ Avoid:
 - skill-progress bars;
 - long lists of technology logos;
 - unnecessary motion.
+
+## Component structure
+
+- `src/components/LinkCard.astro` — reusable internal/external link tile.
+- `src/components/PageHeading.astro` — standard page title/description.
+- `src/components/PaperCard.astro` — paper entry with PDF/source links.
+- `src/data/home.ts` — landing-page destinations.
+- `src/data/projects.ts` — project links.
+- `src/data/resources.ts` — resource links.
+- `src/data/papers.ts` — paper metadata.
+- `public/resume/` — standalone résumé HTML/CSS copied from the résumé repository.
+
+Keep content in `src/data/` where practical and presentation in `src/components/`.
+
+For papers, prefer LaTeX source + generated PDF. Compile LaTeX during CI when papers are introduced, place generated PDFs in the public output, and list them through `src/data/papers.ts`.
 
 ## Development
 
