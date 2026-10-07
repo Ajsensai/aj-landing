@@ -32,20 +32,6 @@ jobs:
           mkdir -p public/papers
           cp papers/ds-sim-report/main.pdf public/papers/ds-sim-report.pdf
 
-      - name: Extract IoV blockchain paper source
-        run: |
-          mkdir -p papers/iov-blockchain/build
-          unzip -q papers/iov-blockchain/source.zip -d papers/iov-blockchain/build
-
-      - name: Compile IoV blockchain paper
-        uses: xu-cheng/latex-action@v4
-        with:
-          root_file: main.tex
-          working_directory: papers/iov-blockchain/build
-
-      - name: Publish IoV blockchain paper
-        run: cp papers/iov-blockchain/build/main.pdf public/papers/iov-blockchain.pdf
-
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
